@@ -6,14 +6,18 @@ import imp
 import sys
 imp.reload(sys)
 
-cyrillic = u"АаӘәБбВвГгҒғДдЕеЖжЗзИиЙйКкҚқЛлМмНнҢңОоӨөПпРрСсТтУуҰұҮүФфХхҺһЦцЪъЫыІіЬьЭэ"
-newlatin = u"AaÁáBbVvGgĞğDdEeJjZzIıIıKkQqLlMmNnŃńOoÓóPpRrSsTtÝýUuÚúFfHhHhSs‘‘YyIi‘‘Éé"
+cyrillic = u"АаӘәБбВвГгҒғДдЕеЖжЗзИиЙйКкҚқЛлМмНнҢңОоӨөПпРрСсТтУуҰұҮүФфХхҺһЦцЫыІіЭэ"
+newlatin = u"AaÁáBbVvGgĞğDdEeJjZzIıIıKkQqLlMmNnŃńOoÓóPpRrSsTtÝýUuÚúFfHhHhSsYyIiÉé"
 
 with open("in.txt","r") as in_file:
     with open("out.txt","a") as out_file:
         data =  in_file.read()
         symmap = {ord(c): ord(t) for c, t in zip(cyrillic, newlatin)}
         out = data.translate(symmap) \
+            .replace(u"Ъ", u"") \
+            .replace(u"ъ", u"") \
+            .replace(u"Ь", u"") \
+            .replace(u"ь", u"") \
         	.replace(u"Ш", u"Sh") \
         	.replace(u"ш", u"sh") \
         	.replace(u"Щ", u"Sh") \
